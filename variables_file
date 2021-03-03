@@ -1,0 +1,4 @@
+hostname
+uptime
+free
+df -h
