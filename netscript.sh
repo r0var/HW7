@@ -38,8 +38,13 @@ function arr {
 
 function rewriteRecord {
   local CHECK=$(grep "SENT" variables_file)
-  sed -i "s/$CHECK/SENT=\"$ARG2\"/" variables_file
-  echo "Entry changed!"
+  local VARIABLE=$(echo $CHECK | sed s'/SENT=//' | sed s'/\"//g')
+  if [[ ! $VARIABLE = $ARG2 ]]; then
+      sed -i "s/$CHECK/SENT=\"$ARG2\"/" variables_file
+      echo "Entry changed!"
+    else
+      echo "Entry exists!"
+  fi
 }
 
 function printHelp {
