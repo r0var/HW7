@@ -4,20 +4,20 @@ ARG2=$2
 COUNT=1
 
 function listPrint {
-  { cat servers_list; echo; } | while read LINE
-  do 
-  echo "Server $COUNT is: $LINE"
-  COUNT=$(($COUNT+1))
+  cat servers_list | while read LINE
+    do 
+      echo "Server $COUNT is: $LINE"
+      COUNT=$(($COUNT+1))
   done
 }
 
 function listWorker {
-  { cat servers_list; echo; } | while read LINE
-  do 
-  { cat variables_file; echo; } | while read COM
-  do
-  ssh $LINE $COM
-  done
+  cat servers_list | while read LINE
+    do
+      cat variables_file | while read COM
+        do
+          ssh $LINE $COM &
+      done
   done
 }
 
